@@ -2,7 +2,7 @@
 <div>
     <div id="container"></div>
     <button @click="swimSpeed++">Speed+</button>
-     <button @click="swimSpeed--">Speed-</button>
+    <button @click="swimSpeed--">Speed-</button>
     {{swimSpeed}}
     <!-- <label for="">Rotate x</label>
     <input type="number" v-model="rotationX.min" name="" id="">
@@ -54,7 +54,7 @@ export default {
             let container = document.getElementById('container');
 
             // camera
-            this.camera = new Three.PerspectiveCamera(30, container.clientWidth / container.clientHeight, 0.01, 30);
+            this.camera = new Three.PerspectiveCamera(30, container.clientWidth / container.clientHeight, 1, 30);
             this.camera.position.z = 4;
 
             this.scene = new Three.Scene();
@@ -64,9 +64,9 @@ export default {
 
             // LIGHT
 
-            const ambientLight = new Three.AmbientLight('white', 2);
+            const ambientLight = new Three.AmbientLight('lightBlue', 2);
 
-            const mainLight = new Three.DirectionalLight('white', 5);
+            const mainLight = new Three.DirectionalLight('lightGreen', 4);
             mainLight.position.set(10, 10, 10);
 
             const secondLight = new Three.DirectionalLight('aqua', 3)
@@ -75,6 +75,10 @@ export default {
             this.scene.add(ambientLight);
             this.scene.add(mainLight);
             this.scene.add(secondLight);
+
+            const color = 'lightBlue';
+            const density = 0.1;
+            this.scene.fog = new Three.FogExp2(color, density);
 
             // Load object
 
@@ -87,28 +91,8 @@ export default {
                 this.scene.add(this.fish);
                 this.fish.rotation.x = 0.2;
                 this.fish.rotation.y = -0.6;
+                this.setVals()
                 //  left fin
-                this.leftFin = gltf.scene.getObjectByName('Bone015');
-                gsap.fromTo(this.leftFin.rotation, this.swimSpeed, { y: this.leftFin.rotation.y, x: this.leftFin.rotation.x }, { y: this.leftFin.rotation.y + 0.1, x: this.leftFin.rotation.x + 0.1, yoyo: true, repeat: -1, ease: Power2.easeInOut })
-                // right fin
-                this.rightFin = gltf.scene.getObjectByName('Bone018');
-                gsap.to(this.rightFin.rotation, this.swimSpeed, { y: this.rightFin.rotation.y - 0.1, x: this.rightFin.rotation.x - 0.1, yoyo: true, repeat: -1, ease: Power2.easeInOut })
-                // head
-                this.head = gltf.scene.getObjectByName('Bone001');
-                gsap.fromTo(this.head.rotation, this.swimSpeed, { z: this.head.rotation.z - 0.1 }, { z: this.head.rotation.z + 0.1, yoyo: true, repeat: -1, ease: Power2.easeInOut })
-                // back fins
-                // top
-                this.backFins.top = gltf.scene.getObjectByName('Bone008');
-                gsap.fromTo(this.backFins.top.rotation, this.swimSpeed, { z: this.backFins.top.rotation.z + 0.3 }, { z: this.backFins.top.rotation.z - 0.3, yoyo: true, repeat: -1, ease: Power2.easeInOut })
-                // bottom
-                this.backFins.bottom = gltf.scene.getObjectByName('Bone010');
-                gsap.fromTo(this.backFins.bottom.rotation, this.swimSpeed, { z: this.backFins.bottom.rotation.z + 0.3 }, { z: this.backFins.bottom.rotation.z - 0.3, yoyo: true, repeat: -1, ease: Power2.easeInOut })
-                // tail
-                this.tail = gltf.scene.getObjectByName('Bone004');
-                gsap.fromTo(this.tail.rotation, this.swimSpeed, { z: this.tail.rotation.z + 0.2 }, { z: this.tail.rotation.z - 0.2, yoyo: true, repeat: -1, ease: Power2.easeInOut })
-                // tail
-                this.topFin = gltf.scene.getObjectByName('Bone014');
-                gsap.fromTo(this.topFin.rotation, this.swimSpeed, { z: this.topFin.rotation.z + 0.3 }, { z: this.topFin.rotation.z - 0.3, yoyo: true, repeat: -1, ease: Power2.easeInOut })
             })
 
             // set object material
@@ -130,6 +114,31 @@ export default {
             container.appendChild(this.renderer.domElement);
 
         },
+
+        setVals(){
+                this.leftFin = this.scene.getObjectByName('Bone015');
+                gsap.fromTo(this.leftFin.rotation, this.swimSpeed, { y: this.leftFin.rotation.y, x: this.leftFin.rotation.x }, { y: this.leftFin.rotation.y + 0.1, x: this.leftFin.rotation.x + 0.1, yoyo: true, repeat: -1, ease: Power2.easeInOut })
+                // right fin
+                this.rightFin = this.scene.getObjectByName('Bone018');
+                gsap.to(this.rightFin.rotation, this.swimSpeed, { y: this.rightFin.rotation.y - 0.1, x: this.rightFin.rotation.x - 0.1, yoyo: true, repeat: -1, ease: Power2.easeInOut })
+                // head
+                this.head = this.scene.getObjectByName('Bone001');
+                gsap.fromTo(this.head.rotation, this.swimSpeed, { z: this.head.rotation.z - 0.1 }, { z: this.head.rotation.z + 0.1, yoyo: true, repeat: -1, ease: Power2.easeInOut })
+                // back fins
+                // top
+                this.backFins.top = this.scene.getObjectByName('Bone008');
+                gsap.fromTo(this.backFins.top.rotation, this.swimSpeed, { z: this.backFins.top.rotation.z + 0.3 }, { z: this.backFins.top.rotation.z - 0.3, yoyo: true, repeat: -1, ease: Power2.easeInOut })
+                // bottom
+                this.backFins.bottom = this.scene.getObjectByName('Bone010');
+                gsap.fromTo(this.backFins.bottom.rotation, this.swimSpeed, { z: this.backFins.bottom.rotation.z + 0.3 }, { z: this.backFins.bottom.rotation.z - 0.3, yoyo: true, repeat: -1, ease: Power2.easeInOut })
+                // tail
+                this.tail = this.scene.getObjectByName('Bone004');
+                gsap.fromTo(this.tail.rotation, this.swimSpeed, { z: this.tail.rotation.z + 0.2 }, { z: this.tail.rotation.z - 0.2, yoyo: true, repeat: -1, ease: Power2.easeInOut })
+                // tail
+                this.topFin = this.scene.getObjectByName('Bone014');
+                gsap.fromTo(this.topFin.rotation, this.swimSpeed, { z: this.topFin.rotation.z + 0.3 }, { z: this.topFin.rotation.z - 0.3, yoyo: true, repeat: -1, ease: Power2.easeInOut })
+
+        },
         animate() {
 
             this.renderer.render(this.scene, this.camera);
@@ -144,6 +153,15 @@ export default {
                 this.animate();
 
             });
+        }
+    },
+    watch: {
+        swimSpeed() {
+          
+            this.fish.updateMatrix();
+            this.tail.updateMatrix();
+            console.log('speed')
+
         }
     },
     mounted() {
