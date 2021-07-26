@@ -1,6 +1,9 @@
 <template>
 <div>
     <div id="container"></div>
+    <button @click="swimSpeed++">Speed+</button>
+     <button @click="swimSpeed--">Speed-</button>
+    {{swimSpeed}}
     <!-- <label for="">Rotate x</label>
     <input type="number" v-model="rotationX.min" name="" id="">
     <br>
@@ -19,23 +22,31 @@
 // .gltf recommended file
 import * as Three from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import gsap from 'gsap'
+import { gsap, Power2 } from "gsap";
 export default {
     name: 'ThreeTest',
     data() {
         return {
+            output: {},
+            clock: new Three.Clock(),
             camera: null,
             scene: null,
             renderer: null,
-            fish: {},
-        
-            fishUlr: require('@/assets/shark.glb'),
-            swimSpeed: 0.001,
-            rotationX: {
-                min: -0.2,
-                max: -0.2
+            fish: '',
+            leftFin: '',
+            rightFin: '',
+            topFin: '',
+            backFins: {
+                top: '',
+                bottom: ''
             },
-            rotationY: -1,
+            tail: {},
+            head: '',
+            fishUlr: require('@/assets/shark.glb'),
+            //   fishUlr: 'https://threejs.org/examples/models/gltf/Soldier.glb',
+
+            swimSpeed: 3,
+
         }
     },
     methods: {
@@ -44,7 +55,7 @@ export default {
 
             // camera
             this.camera = new Three.PerspectiveCamera(30, container.clientWidth / container.clientHeight, 0.01, 30);
-            this.camera.position.z = 10;
+            this.camera.position.z = 4;
 
             this.scene = new Three.Scene();
 
@@ -52,39 +63,52 @@ export default {
             this.scene.background = new Three.Color(0x096AB2);
 
             // LIGHT
-            var spotLight = new Three.SpotLight(0x2dc3d7);
-            spotLight.position.set(100, 1000, 100);
-            spotLight.castShadow = true;
-            spotLight.shadowMapWidth = 1024;
-            spotLight.shadowMapHeight = 1024;
-            spotLight.shadowCameraNear = 900;
-            spotLight.shadowCameraFar = 4000;
-            spotLight.shadowCameraFov = 10;
-            this.scene.add(spotLight);
 
-            var light = new Three.HemisphereLight(0x2dc3d7, 0xF87A36, 1.9);
-            this.scene.add(light);
+            const ambientLight = new Three.AmbientLight('white', 2);
 
-            var dirLight = new Three.DirectionalLight(0x2dc3d7, 0.9);
-            dirLight.position.set(1, 1, 1);
-            this.scene.add(dirLight);
+            const mainLight = new Three.DirectionalLight('white', 5);
+            mainLight.position.set(10, 10, 10);
+
+            const secondLight = new Three.DirectionalLight('aqua', 3)
+            secondLight.position.set(10, 10, 10);
+
+            this.scene.add(ambientLight);
+            this.scene.add(mainLight);
+            this.scene.add(secondLight);
 
             // Load object
+
             //  let loader = new OBJLoader();
 
             const gltfLoader = new GLTFLoader();
 
             gltfLoader.load(this.fishUlr, (gltf) => {
-
-                this.scene.add(gltf.scene);
-
-        
-        
-             
-
-                gsap.fromTo(gltf.scene.rotation, 3, { y: -0.5, }, { y: 0.5, yoyo: true, repeat: -1, ease: 'easeInOut', delay: 1 })
-                // gsap.fromTo(gltf.scene.skeleton.bones[1].position, 3, { y: -0.5, }, { y: 0.5, yoyo: true, repeat: -1, ease: 'easeInOut', delay: 1 })
-
+                this.fish = gltf.scene
+                this.scene.add(this.fish);
+                this.fish.rotation.x = 0.2;
+                this.fish.rotation.y = -0.6;
+                //  left fin
+                this.leftFin = gltf.scene.getObjectByName('Bone015');
+                gsap.fromTo(this.leftFin.rotation, this.swimSpeed, { y: this.leftFin.rotation.y, x: this.leftFin.rotation.x }, { y: this.leftFin.rotation.y + 0.1, x: this.leftFin.rotation.x + 0.1, yoyo: true, repeat: -1, ease: Power2.easeInOut })
+                // right fin
+                this.rightFin = gltf.scene.getObjectByName('Bone018');
+                gsap.to(this.rightFin.rotation, this.swimSpeed, { y: this.rightFin.rotation.y - 0.1, x: this.rightFin.rotation.x - 0.1, yoyo: true, repeat: -1, ease: Power2.easeInOut })
+                // head
+                this.head = gltf.scene.getObjectByName('Bone001');
+                gsap.fromTo(this.head.rotation, this.swimSpeed, { z: this.head.rotation.z - 0.1 }, { z: this.head.rotation.z + 0.1, yoyo: true, repeat: -1, ease: Power2.easeInOut })
+                // back fins
+                // top
+                this.backFins.top = gltf.scene.getObjectByName('Bone008');
+                gsap.fromTo(this.backFins.top.rotation, this.swimSpeed, { z: this.backFins.top.rotation.z + 0.3 }, { z: this.backFins.top.rotation.z - 0.3, yoyo: true, repeat: -1, ease: Power2.easeInOut })
+                // bottom
+                this.backFins.bottom = gltf.scene.getObjectByName('Bone010');
+                gsap.fromTo(this.backFins.bottom.rotation, this.swimSpeed, { z: this.backFins.bottom.rotation.z + 0.3 }, { z: this.backFins.bottom.rotation.z - 0.3, yoyo: true, repeat: -1, ease: Power2.easeInOut })
+                // tail
+                this.tail = gltf.scene.getObjectByName('Bone004');
+                gsap.fromTo(this.tail.rotation, this.swimSpeed, { z: this.tail.rotation.z + 0.2 }, { z: this.tail.rotation.z - 0.2, yoyo: true, repeat: -1, ease: Power2.easeInOut })
+                // tail
+                this.topFin = gltf.scene.getObjectByName('Bone014');
+                gsap.fromTo(this.topFin.rotation, this.swimSpeed, { z: this.topFin.rotation.z + 0.3 }, { z: this.topFin.rotation.z - 0.3, yoyo: true, repeat: -1, ease: Power2.easeInOut })
             })
 
             // set object material
@@ -107,11 +131,18 @@ export default {
 
         },
         animate() {
+
             this.renderer.render(this.scene, this.camera);
             this.camera.lookAt(this.scene.position);
 
+            if (this.fish) {
+                //this.fish.rotation.y += 0.001;
+            }
+
             requestAnimationFrame(() => {
+
                 this.animate();
+
             });
         }
     },
@@ -127,6 +158,6 @@ export default {
 #container {
     width: 100vw;
     height: 100vh;
-color: rgb(112, 207, 207);
+    color: rgb(112, 207, 207);
 }
 </style>
