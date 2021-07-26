@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <threeTest />
+    <ThreeTest />
   </div>
 </template>
 
 <script>
-import threeTest from './components/threeTest.vue'
+import ThreeTest from './components/threeTest.vue'
+//import threeTest from './components/threeTest.vue'
+//import robotTest from './components/robotTest.vue'
 
 export default {
   name: 'App',
   components: {
-    threeTest
+    
+    ThreeTest
   }
 }
 </script>

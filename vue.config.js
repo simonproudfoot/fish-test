@@ -4,16 +4,11 @@ module.exports = {
     configureWebpack: {
         module: {
             rules: [{
-                test: /\.mtl$/,
-                loader: 'mtl-loader'
-            },
-            {
-                test: /\.obj$/,
-
-                // CHANGE HERE
-                loader: 'url-loader',
-
-             //   include: '..assets'
+                test: /\.(glb)(\?.*)?$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {}
+                }]
             },
             ]
         }
