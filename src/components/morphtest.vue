@@ -2,7 +2,7 @@
 <div>
     <div id="container"></div>
     <div class="infoBox"><strong>Test #1 - Three.js and GSAP</strong>
-    <p><i>Movements for example only!</i></p>
+        <p><i>Movements for example only!</i></p>
         <p>Import each model with each possible fin selection and move each bone using gsap</p>
         <p>Then hide/show relevent models</p>
         <hr>
@@ -52,7 +52,7 @@ export default {
             tail: {},
             head: '',
             fishOneUlr: require('@/assets/shark.glb'),
-            fishTwoUrl: require('@/assets/sharkfin3.glb'),
+            fishTwoUrl: require('@/assets/sharkfinsoup.glb'),
             swimSpeed: 2,
             // movments
             movments: {
@@ -122,12 +122,10 @@ export default {
 
             // resize
 
-        
-
         },
 
-        onWindowResize(){
-                this.camera.aspect = window.innerWidth / window.innerHeight;
+        onWindowResize() {
+            this.camera.aspect = window.innerWidth / window.innerHeight;
             this.camera.updateProjectionMatrix();
             this.renderer.setSize(window.innerWidth, window.innerHeight);
         },
@@ -164,15 +162,15 @@ export default {
         moveFishTwo() {
             //  left fin
             if (this.fishTwo) {
-                // this.leftFin = this.fishTwo.getObjectByName('Bone015');
-                //this.tlOne.fromTo(this.leftFin.rotation, this.swimSpeed, { y: this.leftFin.rotation.y, x: this.leftFin.rotation.x }, { y: this.leftFin.rotation.y + 0.1, x: this.leftFin.rotation.x + 0.1, yoyo: true, repeat: -1, ease: Power2.easeInOut }).add("end", this.swimSpeed)
+                var leftFin = this.fishTwo.getObjectByName('Bone018');
+                this.tlTwo.fromTo(leftFin.rotation, this.swimSpeed, { y: leftFin.rotation.y -0.3 }, { y: leftFin.rotation.y + 0.1,  yoyo: true, repeat: -1, ease: Power2.easeInOut }).add("end", this.swimSpeed)
                 // // right fin
-                this.rightFin = this.fishTwo.getObjectByName('Bone018');
-                this.tlOne.fromTo(this.rightFin.rotation, this.swimSpeed, { y: 0.3 }, { y: 0.1, yoyo: true, repeat: -1 })
-                this.tlOne.to(this.rightFin.position, this.swimSpeed, { y: this.rightFin.position.y - 0.1, yoyo: true, repeat: -1, ease: Power2.easeInOut }, 'end')
+                var rightFin = this.fishTwo.getObjectByName('Bone026');
+                this.tlTwo.fromTo(rightFin.rotation, this.swimSpeed, { y: rightFin.rotation.y +0.3, x: rightFin.rotation.x - 0.6 }, { y: rightFin.rotation.y +0.2, x: rightFin.rotation.x - 0.1, yoyo: true, repeat: -1, ease: Power2.easeInOut }).add("end", this.swimSpeed)
+              //  this.tlTwo.to(this.rightFin.position, this.swimSpeed, { y: this.rightFin.position.y - 0.1, yoyo: true, repeat: -1, ease: Power2.easeInOut }, 'end')
                 // head
                 this.head = this.fishTwo.getObjectByName('Bone001');
-                this.tlTwo.fromTo(this.head.rotation, this.swimSpeed, { y: this.head.rotation.z - 0.03 }, { y: this.head.rotation.z + 0.03, yoyo: true, repeat: -1, ease: Power2.easeInOut }, 'end')
+                this.tlTwo.fromTo(this.head.rotation, this.swimSpeed, {z: this.head.rotation.z + 0.1, y: this.head.rotation.z - 0.03 }, { z: this.head.rotation.z - 0.1, y: this.head.rotation.z + 0.03, yoyo: true, repeat: -1, ease: Power2.easeInOut }, 'end')
                 // back fins
                 // top
                 this.backFins.top = this.fishTwo.getObjectByName('Bone008');
@@ -182,7 +180,7 @@ export default {
                 this.tlTwo.fromTo(this.backFins.bottom.rotation, this.swimSpeed, { z: this.backFins.bottom.rotation.z + 0.3 }, { z: this.backFins.bottom.rotation.z - 0.3, yoyo: true, repeat: -1, ease: Power2.easeInOut }, 'end')
                 // tail
                 this.tail = this.fishTwo.getObjectByName('Bone004');
-                this.tlTwo.fromTo(this.tail.rotation, this.swimSpeed, { z: this.tail.rotation.z + 0.02 }, { z: this.tail.rotation.z - 0.02, yoyo: true, repeat: -1, ease: Power2.easeInOut }, 'end')
+                this.tlTwo.fromTo(this.tail.rotation, this.swimSpeed, { z: this.tail.rotation.z + 0.05 }, { z: this.tail.rotation.z - 0.05, yoyo: true, repeat: -1, ease: Power2.easeInOut }, 'end')
                 // tail
                 this.topFin = this.fishTwo.getObjectByName('Bone014');
                 this.tlTwo.fromTo(this.topFin.rotation, this.swimSpeed, { z: this.topFin.rotation.z + 0.05 }, { z: this.topFin.rotation.z - 0.05, yoyo: true, repeat: -1, ease: Power2.easeInOut }, 'end')
@@ -230,7 +228,7 @@ export default {
         this.init();
         this.animate();
 
-        window.addEventListener( 'resize', this.onWindowResize, false );
+        window.addEventListener('resize', this.onWindowResize, false);
 
     }
 }
