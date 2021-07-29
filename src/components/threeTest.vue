@@ -90,19 +90,7 @@ export default {
                 this.moveIt()
             })
 
-            // set object material
-            var material_flat = new Three.MeshPhongMaterial({
-                color: 0xF87A36,
-                shading: Three.FlatShading,
-                shininess: 400,
-                specularity: 10,
-                specular: 0xF2B06C,
-            });
-
-            var world_mesh = new Three.Mesh(this.fish, material_flat);
-            world_mesh.castShadow = true;
-            world_mesh.receiveShadow = true;
-
+           
             // RENDER
             this.renderer = new Three.WebGLRenderer({ antialias: true });
             this.renderer.setSize(container.clientWidth, container.clientHeight);
@@ -112,7 +100,7 @@ export default {
 
         moveIt() {
             //  left fin
-           
+            if (this.fish) {
                 this.leftFin = this.scene.getObjectByName('Bone015');
                 this.tl.fromTo(this.leftFin.rotation, this.swimSpeed, { y: this.leftFin.rotation.y, x: this.leftFin.rotation.x }, { y: this.leftFin.rotation.y + 0.1, x: this.leftFin.rotation.x + 0.1, yoyo: true, repeat: -1, ease: Power2.easeInOut }).add("end", this.swimSpeed)
                 // right fin
@@ -136,7 +124,8 @@ export default {
                 this.tl.fromTo(this.topFin.rotation, this.swimSpeed, { z: this.topFin.rotation.z + 0.3 }, { z: this.topFin.rotation.z - 0.3, yoyo: true, repeat: -1, ease: Power2.easeInOut }, 'end')
 
                 this.tl.play()
-            
+            }
+
         },
 
         animate() {

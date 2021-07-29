@@ -1,11 +1,12 @@
 <template>
   <div id="app">
-    <ThreeTest />
+    <Morphtest />
   </div>
 </template>
 
 <script>
-import ThreeTest from './components/threeTest.vue'
+import Morphtest from './components/morphtest.vue'
+
 //import threeTest from './components/threeTest.vue'
 //import robotTest from './components/robotTest.vue'
 
@@ -13,11 +14,12 @@ export default {
   name: 'App',
   components: {
     
-    ThreeTest
+    Morphtest
   }
 }
 </script>
 
+    Morphtest
 <style>
 body{
   margin: 0;
