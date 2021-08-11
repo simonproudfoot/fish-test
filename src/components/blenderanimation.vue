@@ -1,8 +1,8 @@
 <template>
 <div style="position: relative">
     <div id="container"></div>
-    <div class="infoBox"><strong>Test #2 - Three.js fin swap</strong>
-
+    <div class="infoBox"><strong>Test #2 - Fin swap</strong>
+        <button @click="visible = true">DETAILS</button>
         <p>Create an animation in 3D software featuring all fin actions running together but making only one fin visible at a time </p>
         <p>This way we only import one object and animaton</p>
         <hr>
@@ -16,7 +16,7 @@
         <span style="padding: 0 10px">|</span>
         <button :class="backFin === 'back_fin_1' ? 'active' : null" @click="changeBackFin('back_fin_1')">Back fin 1</button>
         <button :class="backFin === 'back_fin_2' ? 'active' : null" @click="changeBackFin('back_fin_2')">Back fin 2</button>
-
+        <vue-easy-lightbox :visible="visible" :imgs="imageTwo" @hide="visible = false"></vue-easy-lightbox>
     </div>
 </div>
 </template>
@@ -24,11 +24,14 @@
 <script>
 import * as Three from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-
+import VueEasyLightbox from 'vue-easy-lightbox'
 export default {
     name: 'ThreeTest',
+      components: { VueEasyLightbox },
     data() {
         return {
+            visible: false,
+              imageTwo: require('@/assets/fish-guide2.jpg'),
             clock: new Three.Clock(),
             mixer: null,
             showFish: 'fishOne',
@@ -153,6 +156,15 @@ export default {
 </script>
 
 <style scoped>
+
+.infoBox button {
+    background-color: red;
+    display: block;
+    width: 100%;
+    padding: 1em;
+    color: #fff;
+    border: none !important
+}
 #container {
     width: 100vw;
     height: 100vh;

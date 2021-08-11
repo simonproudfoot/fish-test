@@ -3,7 +3,7 @@
     <div class="index">
         <button @click="version = 2">version 1</button>
         <button @click="version = 1">version 2</button>
-        <button @click="version = 3">version 3</button>
+
     </div>
     <blenderanimation v-if="version ==1" />
     <morphtest v-if="version == 2" />

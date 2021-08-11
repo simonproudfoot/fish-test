@@ -1,13 +1,17 @@
 <template>
 <div style="position: relative">
     <div id="container"></div>
-    <div class="infoBox"><strong>Test #1 - Three.js and GSAP</strong>
-        <p><i>Movements for example only!</i></p>
-        <p>Import each model with each possible fin selection and move each bone using gsap</p>
-        <p>Then hide/show relevent models</p>
-        <hr>
-        <p>Pro: Importing each variation with all animations could use a lot of memory</p>
-        <p>Cons: Each bone has to be manually animated using gsap <i>fromTo</i> etc</p>
+    <div class="infoBox"><strong>Test #1 - swap models</strong>
+        <br>
+        <br>
+        <button @click="imageOpen('imageTwo')">DETAILS</button>
+            <p><i>Movements for example only!</i></p>
+            <p>Import each model with each possible fin selection and move each bone using gsap</p>
+            <p>Then hide/show relevent models</p>
+            <p>Ideally we'd be able to have pre-made poses made in 3d apps then activate them on click like in <a href="https://threejs.org/examples/#webgl_animation_skinning_morph">THIS EXAMPLE</a>. But in our case its not just the movements that need to change but also the body's shape. It not possible to simply morph in and out of body shapes</p>
+            <hr>
+            <p>Pro: Importing each variation with all animations could use a lot of memory</p>
+            <p>Cons: Each bone has to be manually animated using gsap <i>fromTo</i> etc</p>
 
     </div>
     <div class="controls">
@@ -20,17 +24,24 @@
         <button :class="showFish == 'fishTwo' ? 'active' : null" @click="changeModel('fishTwo')">Pectoral fin B</button>
 
     </div>
+    <vue-easy-lightbox :visible="visible" :imgs="imageShow" @hide="visible = false"></vue-easy-lightbox>
 </div>
 </template>
 
 <script>
+import VueEasyLightbox from 'vue-easy-lightbox'
 import * as Three from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Power2, TimelineMax } from "gsap";
 export default {
     name: 'ThreeTest',
+    components: { VueEasyLightbox },
     data() {
         return {
+            visible: false,
+            imageOne: require('@/assets/fish-guide2.jpg'),
+            imageTwo: require('@/assets/fish-guide.jpg'),
+            imageShow: '',
             showFish: 'fishOne',
             ready: false,
             output: {},
@@ -62,6 +73,14 @@ export default {
         }
     },
     methods: {
+
+        imageOpen(img) {
+
+            this.imageShow = this[img]
+            this.visible = true
+
+        },
+
         init() {
             let container = document.getElementById('container');
 
@@ -235,6 +254,15 @@ export default {
 </script>
 
 <style scoped>
+.infoBox button {
+    background-color: red;
+    display: block;
+    width: 100%;
+    padding: 1em;
+    color: #fff;
+    border: none !important
+}
+
 #container {
     width: 100vw;
     height: 100vh;
