@@ -1,6 +1,7 @@
 <template>
 <div id="app">
-    <div class="index">
+    <combo/>
+    <!-- <div class="index">
         <button @click="version = 2">version 1</button>
         <button @click="version = 1">version 2</button>
 
@@ -17,19 +18,20 @@
             <li>The relevant version plays based on user input</li>
         </ul>
 
-    </div>
+    </div> -->
 </div>
 </template>
-
 <script>
-import blenderanimation from './components/blenderanimation.vue'
-import morphtest from './components/morphtest.vue'
+import combo from './components/combo.vue'
+// import blenderanimation from './components/blenderanimation.vue'
+// import morphtest from './components/morphtest.vue'
 
 export default {
     name: 'App',
     components: {
-        blenderanimation,
-        morphtest
+        combo
+      //  blenderanimation,
+  //      morphtest
     },
     data() {
         return {

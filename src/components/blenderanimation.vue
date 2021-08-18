@@ -6,9 +6,7 @@
         <p>Create an animation in 3D software featuring all fin actions running together but making only one fin visible at a time </p>
         <p>This way we only import one object and animaton</p>
         <hr>
-
         <p>Cons: If we use bones, each bone will pull and distort the rest of the body if attached. <br>Less control over animaton within the code. It all needs to be made in the 3d software </p>
-
     </div>
     <div class="controls">
         <button :class="sideFin === 'side_fin_1' ? 'active' : null" @click="changeSideFin('side_fin_1')">Side fin 1</button>
@@ -27,11 +25,11 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import VueEasyLightbox from 'vue-easy-lightbox'
 export default {
     name: 'ThreeTest',
-      components: { VueEasyLightbox },
+    components: { VueEasyLightbox },
     data() {
         return {
             visible: false,
-              imageTwo: require('@/assets/fish-guide2.jpg'),
+            imageTwo: require('@/assets/fish-guide2.jpg'),
             clock: new Three.Clock(),
             mixer: null,
             showFish: 'fishOne',
@@ -156,7 +154,6 @@ export default {
 </script>
 
 <style scoped>
-
 .infoBox button {
     background-color: red;
     display: block;
@@ -165,6 +162,7 @@ export default {
     color: #fff;
     border: none !important
 }
+
 #container {
     width: 100vw;
     height: 100vh;
