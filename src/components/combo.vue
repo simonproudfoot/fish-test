@@ -66,6 +66,26 @@ export default {
             }, 4000);
         },
 
+        changeBackFin(val) {
+            this.backFin = val
+            if (val == 'back_fin_2') {
+                this.rotate('x', 0.3, 1, true)
+                this.rotate('z', 0.1, 4, true)
+                this.fishOne.getObjectByName('back_fin_2').visible = true
+                this.fishOne.getObjectByName('back_fin_1').visible = false
+            }
+            if (val == 'back_fin_1') {
+                this.rotate('y', 0.2, 1, true)
+                this.rotate('x', 0.1, 1, true)
+                this.rotate('x', 0.1, 1, true)
+                this.move('x', 0.1, 1, true)
+                this.move('y', 0.1, 1, true)
+                this.fishOne.getObjectByName('back_fin_1').visible = true
+                this.fishOne.getObjectByName('back_fin_2').visible = false
+                //this.fishOne.rotation.y = 0
+            }
+        },
+
         // movement functions
         changeSpeed(s) {
             this.mixer.timeScale = s
@@ -74,10 +94,10 @@ export default {
         rotate(axis, angle, speed, loop) {
             angle = this.convertDecimal(angle, true)
             console.log(JSON.stringify(angle))
-          //  gsap.killTweensOf(this.fishOne.rotation, axis);
-            // gsap.set(this.fishOne.rotation, {
-            //     [axis]: this.startAxis[axis]
-            // })
+            gsap.killTweensOf(this.fishOne.rotation, axis);
+            gsap.set(this.fishOne.rotation, {
+                [axis]: this.startAxis[axis]
+            })
             if (loop) {
                 gsap.fromTo(this.fishOne.rotation, speed, {
                     [axis]: this.fishOne.rotation[axis] + angle.start
@@ -99,10 +119,10 @@ export default {
         move(direction, distance, speed, loop) {
             distance = this.convertDecimal(distance, true)
             console.log(JSON.stringify(distance))
-          //  gsap.killTweensOf(this.fishOne.position, direction);
-            // gsap.set(this.fishOne.position, {
-            //     [direction]: this.startPosition[direction]
-            // })
+            gsap.killTweensOf(this.fishOne.position, direction);
+            gsap.set(this.fishOne.position, {
+                [direction]: this.startPosition[direction]
+            })
             if (loop) {
                 gsap.fromTo(this.fishOne.position, speed, {
                     [direction]: this.fishOne.position[direction] + distance.start
@@ -126,6 +146,9 @@ export default {
             let x = converted + converted
             return !removeDecimal ? { start: x - decimal - decimal - decimal, end: converted } : { start: num - num - num, end: num }
         },
+        killPosition(rotationPosition, val) {
+            rotationPosition == 'axis' ? this.fishOne[rotationPosition].val = this.startAxis[val] : this.fishOne[rotationPosition].val = this.startPosition[val]
+        },
         defaultPosition() {
             this.changeSpeed(1)
             gsap.killTweensOf(this.fishOne.position, 'x,y,z');
@@ -145,27 +168,7 @@ export default {
             this.camera.updateProjectionMatrix();
             this.renderer.setSize(window.innerWidth, window.innerHeight);
         },
-        changeBackFin(val) {
-            this.backFin = val
 
-            if (val == 'back_fin_2') {
-                //   this.moveY(-0.5, 0.5, 1)
-                // this.moveX(0, 0, 0)
-                //  this.rotateY(0, 0, 0)
-                //   this.rotateX(-0.1, 0.1, 0.6)
-                this.fishOne.getObjectByName('back_fin_2').visible = true
-                this.fishOne.getObjectByName('back_fin_1').visible = false
-            }
-            if (val == 'back_fin_1') {
-                //     this.rotateX(0, 0, 0)
-                //   this.rotateY(-0.1, 0.1, 0.6)
-                //   this.moveY(0, 0, 0)
-                //    this.moveX(-0.5, 0.5, 1)
-                this.fishOne.getObjectByName('back_fin_1').visible = true
-                this.fishOne.getObjectByName('back_fin_2').visible = false
-                //this.fishOne.rotation.y = 0
-            }
-        },
         changeSideFin(val) {
             this.sideFin = val
             if (val == 'side_fin_2') {
