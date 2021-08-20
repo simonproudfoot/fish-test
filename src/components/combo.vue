@@ -386,7 +386,7 @@ export default {
 
             setTimeout(() => {
                 this.changeSpeed(0)
-            }, 100);
+            }, 1000);
 
         },
     },
