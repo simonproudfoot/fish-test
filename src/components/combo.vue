@@ -185,7 +185,7 @@ export default {
             }
         },
     },
-    meth ods: {
+    methods: {
         // Swim animations
         // axis, angle, speed, loop
         sink() {
