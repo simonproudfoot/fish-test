@@ -125,7 +125,7 @@ export default {
 
                 if (!this.topFin) {
 
-                    this.rotate("x", 0.4, 5, true);
+                     this.sink()
 
                 }
 
@@ -197,9 +197,9 @@ export default {
                 this.changeSpeed(0)
                 this.defaultPosition();
                 this.playing = false
-            }, 4000);
+            }, 5000);
         },
-     
+
         // movement functions
         changeSpeed(s) {
             this.mixer.timeScale = s;
@@ -284,7 +284,7 @@ export default {
             this.camera.updateProjectionMatrix();
             this.renderer.setSize(window.innerWidth, window.innerHeight);
         },
-           changeBackFin(val) {
+        changeBackFin(val) {
             this.backFin = val;
             if (val == "back_fin_2") {
                 this.fishOne.getObjectByName("back_fin_2").visible = true;
@@ -293,9 +293,9 @@ export default {
             if (val == "back_fin_1") {
                 this.fishOne.getObjectByName("back_fin_1").visible = true;
                 this.fishOne.getObjectByName("back_fin_2").visible = false;
-            } 
-            
-            if(!val){
+            }
+
+            if (!val) {
                 this.fishOne.getObjectByName("back_fin_1").visible = false;
                 this.fishOne.getObjectByName("back_fin_2").visible = false;
             }
@@ -309,7 +309,8 @@ export default {
             if (val == "side_fin_1") {
                 this.fishOne.getObjectByName("side_fin_1").visible = true;
                 this.fishOne.getObjectByName("side_fin_2").visible = false;
-            } if(!val) {
+            }
+            if (!val) {
                 this.fishOne.getObjectByName("side_fin_1").visible = false;
                 this.fishOne.getObjectByName("side_fin_2").visible = false;
             }
@@ -324,7 +325,8 @@ export default {
             if (val == "top_fin_1") {
                 this.fishOne.getObjectByName("top_fin_1").visible = true;
                 this.fishOne.getObjectByName("top_fin_2").visible = false;
-            } if(!val) {
+            }
+            if (!val) {
                 this.fishOne.getObjectByName("top_fin_1").visible = false;
                 this.fishOne.getObjectByName("top_fin_2").visible = false;
             }
@@ -364,6 +366,8 @@ export default {
                 gltf.animations.forEach((clip) => {
                     this.mixer.clipAction(clip).play();
                 });
+              
+                  this.mixer.timeScale = 0;
                 this.fishOne = gltf.scene;
                 this.scene.add(this.fishOne);
 
