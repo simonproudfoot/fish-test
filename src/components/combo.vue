@@ -185,7 +185,7 @@ export default {
             }
         },
     },
-    methods: {
+    meth ods: {
         // Swim animations
         // axis, angle, speed, loop
         sink() {
@@ -194,7 +194,9 @@ export default {
             this.rotate("z", 0.3, 1, true);
             this.move("y", -60, 5, false);
             setTimeout(() => {
+                this.changeSpeed(0)
                 this.defaultPosition();
+                this.playing = false
             }, 4000);
         },
      
