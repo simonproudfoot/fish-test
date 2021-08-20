@@ -107,7 +107,7 @@ export default {
             ready: false,
             fishOne: "",
             scene: "",
-            fishOneUlr: require("@/assets/simplefish3.glb"),
+            fishOneUlr: require("@/assets/simplefish4.glb"),
             backgroundImage: require("@/assets/touchscreen_background.jpg"),
             backFin: "",
             sideFin: "",
@@ -125,7 +125,7 @@ export default {
 
                 if (!this.topFin) {
 
-                     this.sink()
+                    this.sink()
 
                 }
 
@@ -346,13 +346,13 @@ export default {
             // background
             this.scene.background = new Three.Color(0x096ab2);
             // LIGHT
-            const ambientLight = new Three.AmbientLight("#fff", 0.4);
+            const ambientLight = new Three.AmbientLight("#fff", 1.3);
             ambientLight.position.set(-10, 10, 10);
-            const mainLight = new Three.DirectionalLight("#fff", 0.2);
-            mainLight.position.set(0, -10, 10);
+            const mainLight = new Three.DirectionalLight("green", 4);
+            mainLight.position.set(0, -0, 0);
             const secondLight = new Three.DirectionalLight("#fff", 0.3);
             secondLight.position.set(0, 0, 1);
-            this.scene.add(mainLight, secondLight, ambientLight);
+            this.scene.add(mainLight, ambientLight);
 
             const loader = new Three.TextureLoader();
             loader.load(this.backgroundImage, (texture) => {
@@ -366,8 +366,8 @@ export default {
                 gltf.animations.forEach((clip) => {
                     this.mixer.clipAction(clip).play();
                 });
-              
-                  this.mixer.timeScale = 0;
+
+                this.mixer.timeScale = 0;
                 this.fishOne = gltf.scene;
                 this.scene.add(this.fishOne);
 
