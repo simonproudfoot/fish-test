@@ -5,12 +5,10 @@
         <h3>Pitch force: {{pitch}}</h3>
         <h3>Yaw force: {{yaw}}</h3>
         <h3>Roll force: {{roll}}</h3>
-
     </div>
     <div id="container">
 
     </div>
-
     <footer>
         <div :class="playing ? 'inactive' : null">
             <div class="fin">
@@ -101,7 +99,7 @@ export default {
                     sideForce: 0,
                 },
                 top_fin_2: {
-                    rollForce: -3,
+                    rollForce: 0,
                     pitchForce: 2,
                     yawForce: 0,
                     topForce: 0,
@@ -109,7 +107,7 @@ export default {
                 },
                 side_fin_1: {
                     rollForce: 1,
-                    pitchForce: -2,
+                    pitchForce: 0,
                     yawForce: 1,
                     topForce: 0,
                     sideForce: 0,
@@ -207,7 +205,7 @@ export default {
             this.topFin ? top = this.fins[this.topFin].pitchForce : top = 0
             this.sideFin ? side = this.fins[this.sideFin].pitchForce : side = 0
             this.backFin ? tail = this.fins[this.backFin].pitchForce : tail = 0
-            total = top + side + tail
+            total = top + side + tail / 3
             if (total <= 0) {
                 return 0
             } else if (total >= 3) {
@@ -225,7 +223,7 @@ export default {
             this.topFin ? top = this.fins[this.topFin].yawForce : top = 0
             this.sideFin ? side = this.fins[this.sideFin].yawForce : side = 0
             this.backFin ? tail = this.fins[this.backFin].yawForce : tail = 0
-            total = top + side + tail
+            total = top + side + tail / 3;
             if (total <= 0) {
                 return 0
             } else if (total >= 3) {
@@ -243,7 +241,7 @@ export default {
             this.topFin ? top = this.fins[this.topFin].rollForce : top = 0
             this.sideFin ? side = this.fins[this.sideFin].rollForce : side = 0
             this.backFin ? tail = this.fins[this.backFin].rollForce : tail = 0
-            total = top + side + tail
+            total = top + side + tail / 3
             if (total <= 0) {
                 return 0
             } else if (total >= 3) {
@@ -259,9 +257,7 @@ export default {
         // Swim animations
         // axis, angle, speed, loop
         sink() {
-
             this.hidePlay = true
-
             this.move("y", -60, 5, false);
             this.rotate("y", 100, 5, false);
             this.rotate("z", 100, 2, false);
