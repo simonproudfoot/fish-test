@@ -94,7 +94,7 @@ export default {
                 top_fin_1: {
                     rollForce: 3,
                     pitchForce: 1,
-                    yawForce: -2,
+                    yawForce: 0,
                     topForce: 0,
                     sideForce: 0,
                 },
@@ -107,8 +107,8 @@ export default {
                 },
                 side_fin_1: {
                     rollForce: 1,
-                    pitchForce: 0,
-                    yawForce: 1,
+                    pitchForce: 3,
+                    yawForce: 0,
                     topForce: 0,
                     sideForce: 0,
                 },
@@ -127,9 +127,9 @@ export default {
                     sideForce: 0,
                 },
                 back_fin_2: {
-                    rollForce: 3,
+                    rollForce: 0,
                     pitchForce: 0,
-                    yawForce: 3,
+                    yawForce: 10,
                     topForce: 0,
                     sideForce: 0,
                 },
